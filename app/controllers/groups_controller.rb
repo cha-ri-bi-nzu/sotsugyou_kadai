@@ -52,15 +52,10 @@ class GroupsController < ApplicationController
 
   def group_sesired_holiday
     @month = Date.current >> 1
-    # if params[:group].present?
-    #   n = 1
-    #   month = ""
-    #   3.times do
-    #     month += params[:group]["month#{n}i"]
-    #     n += 1
-    #   end
-    #   @month = Date.parse("20231001")
-    # end
+    if params[:group].present?
+      month = "#{params[:group]["month(1i)"]}-#{params[:group]["month(2i)"]}-#{params[:group]["month(3i)"]}"
+      @month = Date.parse(month)
+    end
     @sesired_holidays = SesiredHoliday.where(group_id: params[:group_id]).where("my_holiday >= ?", Date.parse((@month.beginning_of_month << 1).to_s)).where("my_holiday <= ?", Date.parse((@month.end_of_month >> 1).to_s)).reorder(my_holiday: :asc)
   end
 
