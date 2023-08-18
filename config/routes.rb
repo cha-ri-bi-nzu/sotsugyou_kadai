@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'attendances/index'
+  get 'attendances/new'
+  get 'attendances/create'
+  get 'attendances/show'
+  get 'attendances/edit'
+  get 'attendances/update'
+  get 'attendances/destroy'
   unauthenticated do
     as :user do
       root :to => 'devise/sessions#new'
