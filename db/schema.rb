@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_17_081022) do
+ActiveRecord::Schema.define(version: 2023_08_18_150209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendances", force: :cascade do |t|
+    t.date "working_day", null: false
+    t.integer "working_status_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_attendances_on_group_id"
+    t.index ["user_id"], name: "index_attendances_on_user_id"
+  end
 
   create_table "groupings", force: :cascade do |t|
     t.boolean "leave_group", default: false, null: false
@@ -71,6 +82,8 @@ ActiveRecord::Schema.define(version: 2023_08_17_081022) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "attendances", "groups"
+  add_foreign_key "attendances", "users"
   add_foreign_key "groupings", "groups"
   add_foreign_key "groupings", "users"
   add_foreign_key "sesired_holidays", "groups"
