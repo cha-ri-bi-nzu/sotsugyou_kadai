@@ -32,6 +32,15 @@
 </div>
 
 <div>
+  <br>
+  <%= link_to "シフト確認", attendances_path(group_id: @group.id) %>
+  <% if current_user == @group.owner || current_user.admin %>
+    <br>
+    <%= link_to "シフト作成", new_attendance_path(group_id: @group.id) %>
+  <% end %>
+</div>
+
+<div>
   <% if current_user == @group.owner || current_user.admin %>
     <br>
     <%= link_to "ユーザーを招待する", groupings_path(group_id: @group.id) %>
