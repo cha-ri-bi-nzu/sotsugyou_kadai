@@ -1,6 +1,7 @@
 require "date"
 
 class AttendancesController < ApplicationController
+
   def index
   end
 
@@ -33,7 +34,7 @@ class AttendancesController < ApplicationController
         @attendance.save
       end
     end
-    redirect_to attendance_path(Attendance.where(group_id: @group.id).find_by(my_holiday: Date.parse(@month.beginning_of_month)).id)
+    redirect_to attendance_path(Attendance.where(group_id: @group.id).find_by(my_holiday: Date.parse("#{@month.beginning_of_month}")).id)
   end
 
   def show
@@ -43,7 +44,7 @@ class AttendancesController < ApplicationController
       month = Date.parse("#{Attendance.find(params[:id])}")
     end
     @group_users = User.all
-    @attendances = Attendance.where(user_id: @group_users.ids).where("working_day >= ?", DateTime.parse("#{month.beginning_of_month}").beginning_of_month).where("working_day <= ?", DateTime.parse("#{month.end_of_month}").end_of_month).order(user_id: :asc).order(working_day: :asc)
+    @attendances = Attendance.where(user_id: @group_users.ids).where("working_day >= ?", DateTime.parse("#{@month.beginning_of_month}").beginning_of_month).where("working_day <= ?", DateTime.parse("#{@month.end_of_month}").end_of_month).order(user_id: :asc).order(working_day: :asc)
     @days = []
     @attendances.first.working_day.all_month.each do |d|
       @days << d
