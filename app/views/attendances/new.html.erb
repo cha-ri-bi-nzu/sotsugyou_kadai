@@ -1,4 +1,4 @@
-<h2><%= "#{@group.name}のシフト新規作成" %></h2>
+<h2><%= "シフト作成" %></h2>
 
 <%= form_with(local: true, url: attendances_path) do |f| %>
   <div>
@@ -9,4 +9,4 @@
   </div>
 <% end %>
 <br>
-<%= link_to "戻る", group_path(@group) %>
+<%= link_to "#{@group.name}に戻る", group_path(@group) %>
