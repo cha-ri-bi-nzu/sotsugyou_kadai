@@ -37,6 +37,17 @@ class AttendancesController < ApplicationController
   end
 
   def show
+    if params["month(1i)"].present?
+      month = Date.parse("#{params["month(1i)"]}-#{params["month(2i)"]}-#{params["month(3i)"]}")
+    else
+      month = Date.parse("#{Attendance.find(params[:id])}")
+    end
+    @group_users = User.all
+    @attendances = Attendance.where(user_id: @group_users.ids).where("working_day >= ?", DateTime.parse("#{month.beginning_of_month}").beginning_of_month).where("working_day <= ?", DateTime.parse("#{month.end_of_month}").end_of_month).order(user_id: :asc).order(working_day: :asc)
+    @days = []
+    @attendances.first.working_day.all_month.each do |d|
+      @days << d
+    end
   end
 
   def edit
