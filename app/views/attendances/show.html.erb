@@ -31,8 +31,8 @@
           <% if attendance.user_id == user.id %>
             <td><%= attendance.working_status.status %></td>
             <% month_working_times += attendance.working_status.working_times %>
-            <% work_days += 1 if [1, 2].include?(attendance.working_status.id) %>
-            <% holidays += 1 if attendance.working_status.id == 3 %>
+            <% work_days += 1 if attendance.working_status.id == 3 %>
+            <% holidays += 1 if [1, 2].include?(attendance.working_status.id) %>
           <% end %>
         <% end %>
         <td><%= work_days %></td>
