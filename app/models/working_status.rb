@@ -1,4 +1,4 @@
-class WorkingStatus < ApplicationRecord
+class WorkingStatus < ActiveHash::Base
   self.data = [
     {id: 1, status: '休', working_times: 0}, 
     {id: 2, status: '希', working_times: 0}, 
