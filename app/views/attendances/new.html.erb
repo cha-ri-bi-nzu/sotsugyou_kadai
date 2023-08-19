@@ -1,2 +1,12 @@
-<h1>Attendances#new</h1>
-<p>Find me in app/views/attendances/new.html.erb</p>
+<h2><%= "#{@group.name}のシフト新規作成" %></h2>
+
+<%= form_with(local: true, url: group_group_sesired_holiday_path, method: :get, scope: :group) do |f| %>
+  <div>
+    <%= f.label :"月のシフトを作成しますか？" %>
+    <%= f.date_select :month, discard_day:true, use_month_numbers:true, start_year:Date.parse(@group.created_at.to_s).year-1, end_year:Date.current.year+200 %>
+
+    <%= f.submit "作成" %>
+  </div>
+<% end %>
+<br>
+<%= link_to "戻る", group_path(@group) %>
