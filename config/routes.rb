@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   resources :sesired_holidays, only: %i[new create destroy]
 
+  resources :attendances, only: %i[index new create show edit destroy]
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
