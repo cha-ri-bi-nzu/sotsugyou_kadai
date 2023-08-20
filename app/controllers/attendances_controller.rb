@@ -39,8 +39,9 @@ class AttendancesController < ApplicationController
 
   def show
     @group = Attendance.find(params[:id]).group
-    @group_users = @group.users
-    @attendances = Attendance.where(user_id: @group_users.ids).where("working_day >= ?", Date.parse("#{@month.beginning_of_month}")).where("working_day <= ?", Date.parse("#{@month.end_of_month}")).order(user_id: :asc).order(working_day: :asc)
+    @attendances = Attendance.where(group_id: @group.id).where("working_day >= ?", Date.parse("#{@month.beginning_of_month}")).where("working_day <= ?", Date.parse("#{@month.end_of_month}")).order(user_id: :asc).order(working_day: :asc)
+    user_ids = @attendances.plack(:user_id).uniq
+    @group_users = User.find(user_ids)
     @days = []
     @attendances.first.working_day.all_month.each do |d|
       @days << d
