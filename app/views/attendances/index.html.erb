@@ -1,2 +1,57 @@
-<h1>Attendances#index</h1>
-<p>Find me in app/views/attendances/index.html.erb</p>
+<h2><%= "シフト確認" %></h2>
+
+<%= form_with(local: true, url: attendances_path, method: :get) do |f| %>
+  <div>
+    <%= f.label :"何月のシフトを確認しますか？" %>
+    <%= f.date_select :month, discard_day:true, use_month_numbers:true, start_year:Date.parse(@group.created_at.to_s).year-1, end_year:Date.current.year+200 %>
+    <%= f.hidden_field :group_id, value: @group.id %>
+    <%= f.submit "検索" %>
+  </div>
+<% end %>
+<br>
+<h3><%= @month.month %>月</h3>
+<table border>
+  <thead>
+    <tr>
+      <th colspan="1"></th>
+      <% @days.each do |day| %>
+        <th><%= day.mday %></th>
+      <% end %>
+      <th colspan="3">勤怠情報</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>氏名</td>
+      <% @days.each do |day| %>
+        <td><%= t("date.abbr_day_names")[day.wday] %></td>
+      <% end %>
+      <td>出勤</td>
+      <td>休日</td>
+      <td>総勤務時間</td>
+    </tr>
+    <% @users.each do |user| %>
+      <% month_working_times = 0 %>
+      <% work_days = 0 %>
+      <% holidays = 0 %>
+      <% @attendances = user.attendances.where("working_day >= ?", Date.parse("#{@month.beginning_of_month}")).where("working_day <= ?", Date.parse("#{@month.end_of_month}")).order(working_day: :asc) %>
+      <% if @attendances.present? %>
+        <tr>
+          <td><%= user.name %></td>
+          <% @attendances.each do |attendance| %>
+            <td><%= attendance.working_status.status %></td>
+            <% month_working_times += attendance.working_status.working_times %>
+            <% work_days += 1 if attendance.working_status.id == 3 %>
+            <% holidays += 1 if [1, 2].include?(attendance.working_status.id) %>
+          <% end %>
+          <td><%= work_days %></td>
+          <td><%= holidays %></td>
+          <td><%= month_working_times %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to "#{@group.name}に戻る", group_path(@group) %>
