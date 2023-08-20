@@ -19,26 +19,28 @@ class AttendancesController < ApplicationController
   end
 
   def create
-    @days = []
-    @month.all_month.each do |day|
-      @days << day
+    days = []
+    month.all_month.each do |day|
+      days << day
     end
-    @group_sesired_holidays = SesiredHoliday.where(group_id: @group.id).where("my_holiday >= ?", Date.parse("#{@month.beginning_of_month}")).where("my_holiday <= ?", Date.parse("#{@month.end_of_month}")).reorder(my_holiday: :asc)
-    @days.each do |day|
+    group_sesired_holidays = SesiredHoliday.where(group_id: @group.id).where("my_holiday >= ?", Date.parse("#{month.beginning_of_month}")).where("my_holiday <= ?", Date.parse("#{month.end_of_month}")).reorder(my_holiday: :asc)
+    days.each do |day|
       @group.users.each do |user|
-        @attendance = Attendance.new
-        @attendance.working_day = day
-        @attendance.user_id = user.id
-        @attendance.group_id = @group.id
-        user_holidays = @group_sesired_holidays.where(user_id: user.id)
+        attendance = Attendance.new
+        attendance.working_day = day
+        attendance.user_id = user.id
+        attendance.group_id = @group.id
+        user_holidays = group_sesired_holidays.where(user_id: user.id)
         if day.wday == 0 || day.wday == 6 || HolidayJapan.check(day)
-          @attendance.working_status_id = 1
+          attendance.working_status_id = 1
         elsif user_holidays.present? && user_holidays.any? { |holiday| holiday.my_holiday == day }
-          @attendance.working_status_id = 2
+          attendance.working_status_id = 2
         else
-          @attendance.working_status_id = 3
+          attendance.working_status_id = 3
         end
-        @attendance.save
+        before_attendances = @group.attendances.where(user_id: user.id, working_day: day)
+        before_attendances.destroy_all if before_attendances.present?
+        attendance.save
       end
     end
     attendance_id = Attendance.where(group_id: @group.id).find_by(working_day: Date.parse("#{@month.beginning_of_month}")).id
