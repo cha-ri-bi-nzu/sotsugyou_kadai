@@ -16,7 +16,6 @@ class AttendancesController < ApplicationController
       @days << day
     end
     @group_sesired_holidays = SesiredHoliday.where(group_id: @group.id).where("my_holiday >= ?", Date.parse("#{@month.beginning_of_month}")).where("my_holiday <= ?", Date.parse("#{@month.end_of_month}")).reorder(my_holiday: :asc)
-    binding.pry
     @days.each do |day|
       @group.users.each do |user|
         @attendance = Attendance.new
@@ -26,7 +25,7 @@ class AttendancesController < ApplicationController
         user_holidays = @group_sesired_holidays.where(user_id: user.id)
         if day.wday == 0 || day.wday == 6
           @attendance.working_status_id = 1
-        elsif user_holidays.present? && user_holidays.any? { |holiday| holiday.my_holiday.day == day }
+        elsif user_holidays.present? && user_holidays.any? { |holiday| holiday.my_holiday == day }
           @attendance.working_status_id = 2
         else
           @attendance.working_status_id = 3
