@@ -41,7 +41,8 @@ class AttendancesController < ApplicationController
         @attendance.save
       end
     end
-    redirect_to attendance_path(Attendance.where(group_id: @group.id).find_by(working_day: Date.parse("#{@month.beginning_of_month}")).id)
+    attendance_id = Attendance.where(group_id: @group.id).find_by(working_day: Date.parse("#{@month.beginning_of_month}")).id
+    redirect_to attendance_path(attendance_id)
   end
 
   def show
