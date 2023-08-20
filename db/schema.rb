@@ -74,11 +74,9 @@ ActiveRecord::Schema.define(version: 2023_08_18_150209) do
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "quit_user", default: false, null: false
     t.index ["admin"], name: "index_users_on_admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name"
-    t.index ["quit_user"], name: "index_users_on_quit_user"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
