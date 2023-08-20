@@ -1,4 +1,5 @@
 require "date"
+require 'holiday_japan'
 
 class AttendancesController < ApplicationController
   before_action :set_group, only: %i[new create]
