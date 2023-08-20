@@ -58,15 +58,6 @@ class AttendancesController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
-  end
-
   private
   def set_group
     @group = Group.find(params[:group_id])
