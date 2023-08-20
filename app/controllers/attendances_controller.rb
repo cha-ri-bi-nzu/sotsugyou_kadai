@@ -24,7 +24,7 @@ class AttendancesController < ApplicationController
         @attendance.user_id = user.id
         @attendance.group_id = @group.id
         user_holidays = @group_sesired_holidays.where(user_id: user.id)
-        if day.wday == 0 || day.wday == 6
+        if day.wday == 0 || day.wday == 6 || HolidayJapan.check(day)
           @attendance.working_status_id = 1
         elsif user_holidays.present? && user_holidays.any? { |holiday| holiday.my_holiday == day }
           @attendance.working_status_id = 2
