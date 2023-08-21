@@ -6,7 +6,7 @@ class AttendancesController < ApplicationController
   before_action :set_month, only: %i[create show]
   
   def index
-    @month = Date.current >> 1
+    @month = Date.current
     set_month if params["month(1i)"].present?
     @days = []
     @month.all_month.each do |day|
