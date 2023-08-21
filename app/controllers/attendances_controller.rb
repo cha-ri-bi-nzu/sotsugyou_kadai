@@ -4,14 +4,12 @@ require 'holiday_japan'
 class AttendancesController < ApplicationController
   before_action :set_group, only: %i[index new create]
   before_action :set_month, only: %i[create show]
+  before_action :set_days, only: %i[create show]
   
   def index
     @month = Date.current
     set_month if params["month(1i)"].present?
-    @days = []
-    @month.all_month.each do |day|
-      @days << day
-    end
+    set_days
     @attendances = Attendance.where(group_id: @group.id).where("working_day >= ?", Date.parse("#{@month.beginning_of_month}")).where("working_day <= ?", Date.parse("#{@month.end_of_month}")).order(user_id: :asc).order(working_day: :asc)
     user_ids = @attendances.pluck(:user_id).uniq
     @group_users = User.find(user_ids)
@@ -21,10 +19,6 @@ class AttendancesController < ApplicationController
   end
 
   def create
-    days = []
-    @month.all_month.each do |day|
-      days << day
-    end
     group_sesired_holidays = SesiredHoliday.where(group_id: @group.id).where("my_holiday >= ?", Date.parse("#{@month.beginning_of_month}")).where("my_holiday <= ?", Date.parse("#{@month.end_of_month}")).reorder(my_holiday: :asc)
     days.each do |day|
       @group.users.each do |user|
@@ -54,10 +48,6 @@ class AttendancesController < ApplicationController
     @attendances = Attendance.where(group_id: @group.id).where("working_day >= ?", Date.parse("#{@month.beginning_of_month}")).where("working_day <= ?", Date.parse("#{@month.end_of_month}")).order(user_id: :asc).order(working_day: :asc)
     user_ids = @attendances.pluck(:user_id).uniq
     @group_users = User.find(user_ids)
-    @days = []
-    @attendances.first.working_day.all_month.each do |d|
-      @days << d
-    end
   end
 
   private
@@ -72,6 +62,13 @@ class AttendancesController < ApplicationController
       @month = Date.parse(params[:month])
     else
       @month = Date.parse("#{Attendance.find(params[:id]).working_day}")
+    end
+  end
+
+  def set_days
+    days = []
+    @month.all_month.each do |day|
+      days << day
     end
   end
 end
