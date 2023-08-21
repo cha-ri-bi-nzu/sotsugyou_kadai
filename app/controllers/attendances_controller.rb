@@ -66,6 +66,8 @@ class AttendancesController < ApplicationController
   def set_month
     if params["month(1i)"].present?
       @month = Date.parse("#{params["month(1i)"]}-#{params["month(2i)"]}-#{params["month(3i)"]}")
+    elsif params[:month].present?
+      @month = Date.parse(params[:month])
     else
       @month = Date.parse("#{Attendance.find(params[:id]).working_day}")
     end

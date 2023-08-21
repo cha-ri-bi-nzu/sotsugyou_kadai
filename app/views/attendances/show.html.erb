@@ -51,6 +51,9 @@
   </tbody>
 </table>
 <br>
+<%= link_to "作り直す", attendances_path(month: @attendances.first.working_day, group_id: @group.id), method: :post %>
+<br>
 <%= link_to "検索に戻る", attendances_path(group_id: @group.id) %>
+<br>
 <%= link_to "#{@group.name}に戻る", group_path(@group) %>
 <br>
