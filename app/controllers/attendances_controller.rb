@@ -66,9 +66,9 @@ class AttendancesController < ApplicationController
   end
 
   def set_days
-    days = []
+    @days = []
     @month.all_month.each do |day|
-      days << day
+      @days << day
     end
   end
 end
