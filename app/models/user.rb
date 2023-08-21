@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   
   def self.guest
-    user = User.find_or_create_by!(email: 'guest@example.com') do |user|
+    user = User.find_or_create_by!(email: "guest@example.com") do |user|
       user.password = SecureRandom.urlsafe_base64
       user.name = "ゲスト"
       user.admin = false
@@ -13,7 +13,7 @@ class User < ApplicationRecord
   end
 
   def self.admin_guest
-    user = User.find_or_create_by!(email: 'admin_guest@example.com') do |user|
+    user = User.find_or_create_by!(email: "admin_guest@example.com") do |user|
       user.password = SecureRandom.urlsafe_base64
       user.name = "ゲスト管理者"
       user.admin = true
