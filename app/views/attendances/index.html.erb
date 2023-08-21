@@ -61,6 +61,8 @@
       <% end %>
     </tbody>
   </table>
+  <br>
+  <%= link_to "シフト詳細へ", attendance_path(@attendances.first.id) %>
 <% else %>
   <p>まだシフトがありません</p>
 <% end %>
