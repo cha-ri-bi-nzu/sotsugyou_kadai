@@ -12,7 +12,9 @@ class AttendancesController < ApplicationController
     @month.all_month.each do |day|
       @days << day
     end
-    @users = @group.users
+    @attendances = Attendance.where(group_id: @group.id).where("working_day >= ?", Date.parse("#{@month.beginning_of_month}")).where("working_day <= ?", Date.parse("#{@month.end_of_month}")).order(user_id: :asc).order(working_day: :asc)
+    user_ids = @attendances.pluck(:user_id).uniq
+    @group_users = User.find(user_ids)
   end
 
   def new

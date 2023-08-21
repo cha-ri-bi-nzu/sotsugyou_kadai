@@ -36,15 +36,14 @@
         <td>休日</td>
         <td>総勤務時間</td>
       </tr>
-      <% @users.each do |user| %>
+      <% @group_users.each do |user| %>
         <% month_working_times = 0 %>
         <% work_days = 0 %>
         <% holidays = 0 %>
-        <% @attendances = user.attendances.where("working_day >= ?", Date.parse("#{@month.beginning_of_month}")).where("working_day <= ?", Date.parse("#{@month.end_of_month}")).order(working_day: :asc) %>
-        <% if @attendances.present? %>
-          <tr>
-            <td><%= user.name %></td>
-            <% @attendances.each do |attendance| %>
+        <tr>
+          <td><%= user.name %></td>
+          <% @attendances.each do |attendance| %>
+            <% if attendance.user_id == user.id %>
               <% if [1, 2].include?(attendance.working_status.id) || HolidayJapan.check(attendance.working_day) %>
                 <td bgcolor="#fdd"><%= attendance.working_status.status %></td>
               <% else %>
@@ -54,11 +53,11 @@
               <% work_days += 1 if attendance.working_status.id == 3 %>
               <% holidays += 1 if [1, 2].include?(attendance.working_status.id) %>
             <% end %>
-            <td><%= work_days %></td>
-            <td><%= holidays %></td>
-            <td><%= month_working_times %></td>
-          </tr>
-        <% end %>
+          <% end %>
+          <td><%= work_days %></td>
+          <td><%= holidays %></td>
+          <td><%= month_working_times %></td>
+        </tr>
       <% end %>
     </tbody>
   </table>
