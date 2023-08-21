@@ -5,7 +5,7 @@
 <br>
 <%= link_to "アカウントをお持ちの方はコチラ！", new_user_registration_path %>
 <br>
-<%#= link_to "ゲストログイン(一般)", tops_guest_sing_in_path #%>
+<%= link_to "ゲストログイン(一般)", users_guest_sing_in_path, method: :post %>
 <br>
-<%#= link_to "ゲストログイン(管理者)", tops_admin_guest_sing_in_path #%>
+<%= link_to "ゲストログイン(管理者)", users_admin_guest_sing_in_path, method: :post %>
 <br>
