@@ -1,0 +1,12 @@
+<h2><%= "シフト作成" %></h2>
+
+<%= form_with(local: true, url: attendances_path) do |f| %>
+  <div>
+    <%= f.label :"何月のシフトを作成しますか？" %>
+    <%= f.date_select :month, discard_day:true, use_month_numbers:true, start_year:Date.parse(@group.created_at.to_s).year-1, end_year:Date.current.year+200 %>
+    <%= f.hidden_field :group_id, value: @group.id %>
+    <%= f.submit "作成" %>
+  </div>
+<% end %>
+<br>
+<%= link_to "#{@group.name}に戻る", group_path(@group) %>

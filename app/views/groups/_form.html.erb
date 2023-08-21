@@ -1,0 +1,26 @@
+<%= form_with(model: @group, local: true) do |f| %>
+  <% if @group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @group.errors.count %>件のエラーがあります。</h2>
+      <ul>
+        <% @group.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label :"グループ名：" %>
+    <%= f.text_field :name %>
+    <br>
+    <br>
+    <p>グループオーナー：<%= "#{current_user.name}" %>さん</p>
+  </div>
+  <br>
+  <br>
+  <% if @group.id.present? %>
+    <%= f.submit :"更新" %>
+  <% else %>
+    <%= f.submit :"登録" %>
+  <% end %>
+<% end %>

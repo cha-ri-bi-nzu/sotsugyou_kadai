@@ -1,0 +1,33 @@
+<h3>ユーザー検索</h3>
+
+<%= form_with(local: true, url: groupings_path, method: :get, scope: :grouping) do |f| %>
+  <div>
+    <%= f.label :"メールアドレス：" %>
+    <%= f.text_field :email %>
+    <%= f.hidden_field :group_id, value: @group.id %>
+    <%= f.submit "検索" %>
+  </div>
+  <% if @user.class == String %>
+    <p><%= @user %></p>
+  <% elsif @user.present? %>
+    <table>
+      <tr>
+        <td><%= @user.name %></td>
+        <% if @grouping.blank? %>
+          <td><%= link_to "招待する", groupings_path(user_id: @user.id, group_id: @group.id), method: :post %></td>
+          <td><%= link_to "キャンセル", groupings_path %></td>
+        <% elsif @grouping.leave_group %>
+          <td><%= link_to "招待する", grouping_path(@grouping), method: :patch %></td>
+          <td><%= link_to "キャンセル", groupings_path %></td>
+        <% else %>
+          <td><%= "このユーザーは既に#{@group.name}に所属しています" %></td>
+        <% end %>
+      </tr>
+    </table>
+  <% else %>
+    <p>お探しのユーザーが登録されていないか、</p>
+    <p>　 メールアドレスが間違っています。</p>
+  <% end %>
+<% end %>
+<br>
+<%= link_to "#{@group.name}に戻る", group_path(@group) %>

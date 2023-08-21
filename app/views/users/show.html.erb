@@ -1,0 +1,12 @@
+<h2><%= "#{@user.name}" %>さんのマイページ</h2>
+
+<br>
+<% if @group.present? %>
+  <% @group.each do |group| %>
+    <%= link_to "#{group.name}", group_path(group) %>
+    <br>
+  <% end %>
+<% else %>
+  <p>どのグループにも所属していません</p>
+<% end %>
+<%= link_to "グループを作る", new_group_path %>
