@@ -3,6 +3,7 @@ require 'holiday_japan'
 
 class AttendancesController < ApplicationController
   before_action :set_group, only: %i[index new create]
+  before_action :admin_or_owner, only: %i[new create]
   before_action :set_month, only: %i[create show]
   before_action :set_days, only: %i[create show]
   
@@ -70,5 +71,9 @@ class AttendancesController < ApplicationController
     @month.all_month.each do |day|
       @days << day
     end
+  end
+
+  def admin_or_owner
+    redirect_to group_path(@group), notice: "シフト作成機能はオーナーと管理者のみ使用できます" unless current_user == @group.owner || current_user.admin
   end
 end

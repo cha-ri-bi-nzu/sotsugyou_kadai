@@ -50,8 +50,10 @@
     <% end %>
   </tbody>
 </table>
-<br>
-<%= link_to "作り直す", attendances_path(month: @attendances.first.working_day, group_id: @group.id), method: :post %>
+<% if current_user == @group.owner || current_user.admin %>
+  <br>
+  <%= link_to "作り直す", attendances_path(month: @attendances.first.working_day, group_id: @group.id), method: :post %>
+<% end %>
 <br>
 <%= link_to "検索に戻る", attendances_path(group_id: @group.id) %>
 <br>
