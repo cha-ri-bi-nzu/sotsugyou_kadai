@@ -15,7 +15,11 @@
     <tr>
       <td>氏名</td>
       <% @days.each do |day| %>
-        <td><%= t("date.abbr_day_names")[day.wday] %></td>
+        <% if  day.wday == 0 || day.wday == 6 %>
+          <td bgcolor="#fbb"><%= t("date.abbr_day_names")[day.wday] %></td>
+        <% else %>
+          <td bgcolor="#bfb"><%= t("date.abbr_day_names")[day.wday] %></td>
+        <% end %>
       <% end %>
       <td>出勤</td>
       <td>休日</td>
@@ -29,7 +33,11 @@
         <td><%= user.name %></td>
         <% @attendances.each do |attendance| %>
           <% if attendance.user_id == user.id %>
-            <td><%= attendance.working_status.status %></td>
+            <% if [1, 2].include?(attendance.working_status.id) || HolidayJapan.check(attendance.working_day) %>
+              <td bgcolor="#fdd"><%= attendance.working_status.status %></td>
+            <% else %>
+              <td bgcolor="#dfd"><%= attendance.working_status.status %></td>
+            <% end %>
             <% month_working_times += attendance.working_status.working_times %>
             <% work_days += 1 if attendance.working_status.id == 3 %>
             <% holidays += 1 if [1, 2].include?(attendance.working_status.id) %>
