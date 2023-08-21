@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'tops/index'
   unauthenticated do
     as :user do
       root :to => 'devise/sessions#new'
