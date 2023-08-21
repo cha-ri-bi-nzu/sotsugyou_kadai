@@ -13,6 +13,18 @@ class Users::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  def guest_sign_in
+    user = User.guest
+    sign_in user
+    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+  end
+
+  def admin_guest_sign_in
+    user = User.admin_guest
+    sign_in user
+    redirect_to root_path, notice: 'ゲスト管理者ユーザーとしてログインしました。'
+  end
+
   # DELETE /resource/sign_out
   # def destroy
   #   super
