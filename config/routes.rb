@@ -17,6 +17,9 @@ Rails.application.routes.draw do
 
   resources :attendances, only: %i[index new create show edit destroy]
 
+  post '/tops/guest_sign_in', to: 'tops#guest_sing_in'
+  post '/tops/admin_guest_sign_in', to: 'tops#admin_guest_sing_in'
+
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
