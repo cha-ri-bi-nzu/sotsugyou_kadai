@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users, only: [:show]
 
+  devise_scope :user do
+  post '/users/guest_sign_in', to: 'users/sessions#guest_sing_in'
+  post '/users/admin_guest_sign_in', to: 'users/sessions#admin_guest_sing_in'
+
+  end
+
   resources :groups, only: %i[new create show edit update destroy] do
     patch :change_owner, path: '/:user_id/owners/'
     patch :invalid, path: '/invalids/'
@@ -16,9 +22,6 @@ Rails.application.routes.draw do
   resources :sesired_holidays, only: %i[new create destroy]
 
   resources :attendances, only: %i[index new create show edit destroy]
-
-  post '/tops/guest_sign_in', to: 'tops#guest_sing_in'
-  post '/tops/admin_guest_sign_in', to: 'tops#admin_guest_sing_in'
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
