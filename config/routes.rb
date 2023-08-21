@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
-  get 'tops/index'
-  unauthenticated do
-    as :user do
-      root :to => 'devise/sessions#new'
-    end
-  end
+  root 'tops#index'
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
