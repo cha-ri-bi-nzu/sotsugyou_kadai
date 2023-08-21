@@ -20,10 +20,10 @@ class AttendancesController < ApplicationController
 
   def create
     days = []
-    month.all_month.each do |day|
+    @month.all_month.each do |day|
       days << day
     end
-    group_sesired_holidays = SesiredHoliday.where(group_id: @group.id).where("my_holiday >= ?", Date.parse("#{month.beginning_of_month}")).where("my_holiday <= ?", Date.parse("#{month.end_of_month}")).reorder(my_holiday: :asc)
+    group_sesired_holidays = SesiredHoliday.where(group_id: @group.id).where("my_holiday >= ?", Date.parse("#{@month.beginning_of_month}")).where("my_holiday <= ?", Date.parse("#{@month.end_of_month}")).reorder(my_holiday: :asc)
     days.each do |day|
       @group.users.each do |user|
         attendance = Attendance.new
