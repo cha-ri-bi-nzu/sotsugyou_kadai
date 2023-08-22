@@ -12,7 +12,7 @@
 
   <body>
     <header>
-      <h1>Task Checker</h1>
+      <h1>シフト自動生成くん</h1>
       <div>
         <div class="info_btn">
           <% if user_signed_in? %>
@@ -26,7 +26,7 @@
         </div>
       </div>
     </header>
-    <div>
+    <div id="form_size">
       <br>
       <% if notice %>
         <p class="alert alert-notice"><%= notice %></p>
@@ -39,7 +39,7 @@
       <%= yield %>
     </div>
     <footer>
-      <%= link_to "タスクチェッカー TOP", root_path %>
+      <%= link_to "シフト自動生成くん TOP", root_path %>
     </footer>
   </body>
 </html>
