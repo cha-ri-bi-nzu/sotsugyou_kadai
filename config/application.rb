@@ -28,5 +28,6 @@ module SotsugyouApp
                        routing_specs: false,
                        controller_specs: false,
                        request_specs: false
+    end
   end
 end
