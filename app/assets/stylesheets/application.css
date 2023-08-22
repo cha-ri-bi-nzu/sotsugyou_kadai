@@ -22,11 +22,11 @@
 }
 
 div{
-  background-color: #fffff0;
+  background-color: #f7ffff;
 }
 
 header, footer {
-  background-color: #afa;
+  background-color: #9fe0ff;
 }
 
 header {
@@ -48,14 +48,15 @@ table, div div, h2, h3 {
 
 .info_btn a {
   margin: 0px 15px;
+
 }
 
 div .info_btn {
   text-align: right;
 }
 
-div div a {
-  margin: auto 10px;
+div div a, div a, div p {
+  margin: auto 20px;
 }
 
 .btn a {
