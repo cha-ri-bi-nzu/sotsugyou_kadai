@@ -11,24 +11,32 @@
   </head>
 
   <body>
-    <br>
-    <% if user_signed_in? %>
-      <%= link_to "マイページ", user_path(current_user) %>
-      <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-      <%= link_to "管理画面", rails_admin_path if current_user.admin %>
-    <% else %>
-      <%= link_to "新規登録", new_user_registration_path %>
-      <%= link_to "ログイン", new_user_session_path %>
-    <% end %>
-    <br>
-    <% if notice %>
-      <p class="alert alert-notice"><%= notice %></p>
+    <header>
+      <h1>Task Checker</h1>
+    </header>
+    <div>
       <br>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-error"><%= alert %></p>
+      <% if user_signed_in? %>
+        <%= link_to "マイページ", user_path(current_user) %>
+        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+        <%= link_to "管理画面", rails_admin_path if current_user.admin %>
+      <% else %>
+        <%= link_to "新規登録", new_user_registration_path %>
+        <%= link_to "ログイン", new_user_session_path %>
+      <% end %>
       <br>
-    <% end %>
-    <%= yield %>
+      <% if notice %>
+        <p class="alert alert-notice"><%= notice %></p>
+        <br>
+      <% end %>
+      <% if alert %>
+        <p class="alert alert-error"><%= alert %></p>
+        <br>
+      <% end %>
+      <%= yield %>
+    </div>
+    <footer>
+      <%= link_to "タスクチェッカー TOP", root_path %>
+    </footer>
   </body>
 </html>
