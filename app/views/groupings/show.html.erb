@@ -5,7 +5,7 @@
   <table>
     <% @sesired_holidays.each do |sesired_holiday| %>
       <tr>
-        <td><%= "#{sesired_holiday.my_holiday}" %></td>
+        <td>・<%= "#{sesired_holiday.my_holiday}" %><%= "(#{t("date.abbr_day_names")[sesired_holiday.my_holiday.wday]})" %></td>
         <td><%= link_to "取り消し", sesired_holiday_path(id: sesired_holiday.id, user_id: @user.id, grouping_id: @grouping.id), method: :delete, date: {confirm: "#{sesired_holiday.my_holiday}を取り消しますか？"} %></td>
       </tr>
     <% end %>

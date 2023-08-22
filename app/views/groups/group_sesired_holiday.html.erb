@@ -8,19 +8,21 @@
   </div>
 <% end %>
 <br>
-<% if @sesired_holidays.present? %>
-  <table>
-    <% @sesired_holidays.each do |sesired_holiday| %>
-      <tr>
-        <td><%= "#{sesired_holiday.my_holiday}" %></td>
-        <td><%= "#{sesired_holiday.user.name}さん" %></td>
-      </tr>
-    <% end %>
-  </table>
-<% else %>
-  <p>まだ希望休が申請されていません</p>
-<% end %>
-<br>
-<br>
-<%= link_to "#{@group.name}に戻る", group_path(@group) %>
-<br>
+<div>
+  <% if @sesired_holidays.present? %>
+    <table>
+      <% @sesired_holidays.each do |sesired_holiday| %>
+        <tr>
+          <td>・<%= "#{sesired_holiday.my_holiday}" %><%= "(#{t("date.abbr_day_names")[sesired_holiday.my_holiday.wday]})" %></td>
+          <td><%= "(#{sesired_holiday.user.name}さん)" %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p>まだ希望休が申請されていません</p>
+  <% end %>
+  <br>
+  <br>
+  <%= link_to "#{@group.name}に戻る", group_path(@group) %>
+  <br>
+</div>
