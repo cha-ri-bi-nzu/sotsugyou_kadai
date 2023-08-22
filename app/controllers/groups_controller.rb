@@ -42,7 +42,7 @@ class GroupsController < ApplicationController
 
   def change_owner
     before_owner = @group.owner.name
-    if @group.update_attribute(:owner_id, params[][:user_id])
+    if @group.update_attribute(:owner_id, params[:user_id])
       redirect_to @group, notice: "#{before_owner}さんから#{@group.owner.name}さんに、オーナー権限を譲渡しました"
     else
       flash.now[:alert] = "オーナー譲渡に失敗しました"
