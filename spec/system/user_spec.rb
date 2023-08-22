@@ -35,12 +35,13 @@ RSpec.describe 'セッション機能', type: :system do
     let!(:user) {FactoryBot.create(:user)}
     context 'ログインをした場合' do
       it "ログイン状態で自分のマイページに遷移される" do
+        click_link "ログアウト"
         visit new_user_session_path
         fill_in "user_email", with: user.email
         fill_in "user[password]", with: 'adminadmin'
         click_button "ログイン"
         expect(current_path).to eq user_path(user.id)
-        expect(page).to have_content 'user_name2さんのマイページ'
+        expect(page).to have_content 'admin_userさんのマイページ'
         expect(page).to have_content 'マイページ'
         expect(page).to have_content 'ログアウト'
         expect(page).to have_content 'ログインしました。'
@@ -80,7 +81,7 @@ RSpec.describe 'セッション機能', type: :system do
         expect(current_path).to eq user_path(second_user.id)
         expect(page).to have_content 'マイページ'
         expect(page).to have_content 'ログアウト'
-        expect(page).to have_content 'admin_userさんのマイページ'
+        expect(page).to have_content 'user_name2さんのマイページ'
         expect(page).to have_content '他のユーザーのページは閲覧できません'
       end
     end
@@ -114,14 +115,14 @@ RSpec.describe '管理者機能', type: :system do
       fill_in "user_email", with: user.email
       fill_in "user_password", with: 'adminadmin'
       click_button "ログイン"
-      click_link "管理者画面"
+      click_link "管理画面"
     end
     context '管理ユーザーがユーザーの詳細画面にアクセスした場合' do
       it "該当のユーザー詳細画面に遷移される" do
         visit user_path(second_user.id)
         expect(current_path).to eq user_path(second_user.id)
         expect(page).to have_content 'user_name2さんのマイページ'
-        expect(page).to have_content '管理者画面'
+        expect(page).to have_content '管理画面'
         expect(page).to have_content 'マイページ'
         expect(page).to have_content 'ログアウト'
       end
