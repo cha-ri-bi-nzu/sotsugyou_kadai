@@ -16,9 +16,14 @@
 
   body {
   margin: 0px auto;
-  max-width: 900px;
+  max-width: 1150px;
+  height: 800px;
+}
+
+body #form_size {
+  margin: 0px auto;
+  max-width: 1150px;
   min-height: 600px;
-  max-height: 100%;
 }
 
 div{
@@ -42,7 +47,7 @@ header h1, header a {
   text-decoration: none;
 }
 
-table, div div, h2, h3 {
+table, div div, h2, h3, h4 {
   margin-left: 25px;
 }
 
