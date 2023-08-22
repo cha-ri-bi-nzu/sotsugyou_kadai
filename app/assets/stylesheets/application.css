@@ -52,8 +52,7 @@ table, div div, h2, h3, h4 {
 }
 
 .info_btn a {
-  margin: 0px 15px;
-
+  margin-right: 5px;
 }
 
 div .info_btn {
@@ -64,9 +63,21 @@ div div a, div a, div p {
   margin: auto 20px;
 }
 
-.btn a {
-  color: #fff;
-} 
+.custom-button {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #f15d5d;
+  color: #444;
+  text-decoration: none;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.custom-button:hover {
+  background-color: #f15d5d70;
+  color: #444;
+}
 
 footer {
   height: 50px;
