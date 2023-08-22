@@ -11,24 +11,35 @@
   </head>
 
   <body>
-    <br>
-    <% if user_signed_in? %>
-      <%= link_to "マイページ", user_path(current_user) %>
-      <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-      <%= link_to "管理画面", rails_admin_path if current_user.admin %>
-    <% else %>
-      <%= link_to "新規登録", new_user_registration_path %>
-      <%= link_to "ログイン", new_user_session_path %>
-    <% end %>
-    <br>
-    <% if notice %>
-      <p class="alert alert-notice"><%= notice %></p>
+    <header>
+      <h1>シフト自動生成くん</h1>
+      <div>
+        <div class="info_btn">
+          <% if user_signed_in? %>
+          <%= link_to "管理画面", rails_admin_path, class: "info-button" if current_user.admin %>
+            <%= link_to "マイページ", user_path(current_user), class: "info-button" %>
+            <%= link_to "ログアウト", destroy_user_session_path, class: "info-button", method: :delete %>
+          <% else %>
+            <%= link_to "新規登録", new_user_registration_path, class: "info-button" %>
+            <%= link_to "ログイン", new_user_session_path, class: "info-button" %>
+          <% end %>
+        </div>
+      </div>
+    </header>
+    <div id="form_size">
       <br>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-error"><%= alert %></p>
-      <br>
-    <% end %>
-    <%= yield %>
+      <% if notice %>
+        <p class="alert alert-notice"><%= notice %></p>
+        <br>
+      <% end %>
+      <% if alert %>
+        <p class="alert alert-error"><%= alert %></p>
+        <br>
+      <% end %>
+      <%= yield %>
+    </div>
+    <footer>
+      <%= link_to "シフト自動生成くん TOP", root_path %>
+    </footer>
   </body>
 </html>
