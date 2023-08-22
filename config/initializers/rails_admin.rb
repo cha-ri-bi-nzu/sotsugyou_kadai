@@ -38,16 +38,16 @@ RailsAdmin.config do |config|
     ## With an audit adapter, you can add:
     # history_index
     # history_show
-
-    config.model WorkingStatus do
-      list do
-        field :status
-        field :working_times
-      end
-      show do
-        field :status
-        field :working_times
-      end
+  end
+  
+  config.model WorkingStatus do
+    list do
+      field :status
+      field :working_times
+    end
+    show do
+      field :status
+      field :working_times
     end
   end
 end
