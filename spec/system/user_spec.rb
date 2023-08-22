@@ -32,24 +32,24 @@ end
 
 RSpec.describe 'セッション機能', type: :system do
   describe 'ログイン機能' do
-    @user = let!(:user) {FactoryBot.create(:user)}
+    let!(:user) {FactoryBot.create(:user)}
     context 'ログインをした場合' do
       it "ログイン状態で自分のマイページに遷移される" do
         visit new_user_session_path
-        fill_in "user_email", with: @user.email
+        fill_in "user_email", with: user.email
         fill_in "user[password]", with: 'adminadmin'
         click_button "ログイン"
-        expect(current_path).to eq user_path(@user.id)
+        expect(current_path).to eq user_path(user.id)
         expect(page).to have_content 'user_name2さんのマイページ'
         expect(page).to have_content 'マイページ'
         expect(page).to have_content 'ログアウト'
         expect(page).to have_content 'ログインしました。'
       end
     end
-    @second_user = let!(:second_user) {FactoryBot.create(:second_user)}
+    let!(:second_user) {FactoryBot.create(:second_user)}
     before do
       visit new_user_session_path
-      fill_in "user_email", with: @second_user.email
+      fill_in "user_email", with: second_user.email
       fill_in "user[password]", with: 'bbbbbb'
       click_button "ログイン"
     end
@@ -66,19 +66,18 @@ RSpec.describe 'セッション機能', type: :system do
     end
   end
   describe 'ユーザー確認機能' do
-    @user = let!(:user) {FactoryBot.create(:user, admin: false)}
-    @second_user = let!(:second_user) {FactoryBot.create(:second_user)}
+    let!(:user) {FactoryBot.create(:user, admin: false)}
+    let!(:second_user) {FactoryBot.create(:second_user)}
     before do
       visit new_user_session_path
-      fill_in "user_email", with: @second_user.email
-      binding.pry
+      fill_in "user_email", with: second_user.email
       fill_in "user[password]", with: 'bbbbbb'
       click_button "ログイン"
     end
     context '一般ユーザーが他のユーザーのマイページにアクセスした場合' do
       it "自分のマイページに遷移される" do
-        visit user_path(@user.id)
-        expect(current_path).to eq user_path(@second_user.id)
+        visit user_path(user.id)
+        expect(current_path).to eq user_path(second_user.id)
         expect(page).to have_content 'マイページ'
         expect(page).to have_content 'ログアウト'
         expect(page).to have_content 'admin_userさんのマイページ'
@@ -90,11 +89,11 @@ end
 
 RSpec.describe '管理者機能', type: :system do
   describe '管理権限確認機能' do
-    @user = let!(:user) {FactoryBot.create(:user)}
+    let!(:user) {FactoryBot.create(:user)}
     context '管理ユーザーが管理画面にアクセスした場合' do
       before do
         visit new_user_session_path
-        fill_in "user_email", with: @user.email
+        fill_in "user_email", with: user.email
         fill_in "user_password", with: 'adminadmin'
         click_button "ログイン"
       end
@@ -109,18 +108,18 @@ RSpec.describe '管理者機能', type: :system do
   end
   describe 'ユーザー管理機能' do
     let!(:user) {FactoryBot.create(:user)}
-    @second_user = let!(:second_user) {FactoryBot.create(:second_user)}
+    let!(:second_user) {FactoryBot.create(:second_user)}
     before do
       visit new_user_session_path
-      fill_in "user_email", with: @user.email
+      fill_in "user_email", with: user.email
       fill_in "user_password", with: 'adminadmin'
       click_button "ログイン"
       click_link "管理者画面"
     end
     context '管理ユーザーがユーザーの詳細画面にアクセスした場合' do
       it "該当のユーザー詳細画面に遷移される" do
-        visit user_path(@second_user.id)
-        expect(current_path).to eq user_path(@second_user.id)
+        visit user_path(second_user.id)
+        expect(current_path).to eq user_path(second_user.id)
         expect(page).to have_content 'user_name2さんのマイページ'
         expect(page).to have_content '管理者画面'
         expect(page).to have_content 'マイページ'
