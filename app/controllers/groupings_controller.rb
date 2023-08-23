@@ -6,8 +6,13 @@ class GroupingsController < ApplicationController
     @user = "メールアドレスでユーザーを探しましょう。"
     if params[:grouping].present?
       @group = Group.find(params[:grouping][:group_id])
-      @user = User.find_by(email: params[:grouping][:email])
-      @grouping = Grouping.find_by(user_id: @user.id, group_id: @group.id)
+      if params[:grouping][:email].present?
+        @user = User.find_by(email: params[:grouping][:email])
+        @grouping = Grouping.find_by(user_id: @user.id, group_id: @group.id)
+      else
+        flash[:notice] = "メールアドレスを入力して検索してください。"
+        render :index
+      end
     end
   end
 
