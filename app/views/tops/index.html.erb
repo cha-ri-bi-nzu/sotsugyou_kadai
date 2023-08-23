@@ -17,12 +17,12 @@
   <%= link_to "ゲストログイン(管理者)", users_admin_guest_sign_in_path, method: :post %>
 <% else %>
   <div>
-    <%= link_to "自分のページへ", user_path(current_user), class: "info-button" %>
+    <%= link_to "自分のページへ", user_path(current_user.id), class: "info-button" %>
   </div>
   <br>
   <% if @group.present? %>
     <% @group.each do |group| %>
-      <%= link_to "#{group.group.name}に行く", group_path(group) %>
+      <%= link_to "#{group.group.name}に行く", group_path(group.group.id) %>
       <br>
     <% end %>
   <% else %>
