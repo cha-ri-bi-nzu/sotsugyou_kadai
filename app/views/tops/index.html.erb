@@ -22,7 +22,7 @@
   <br>
   <% if @group.present? %>
     <% @group.each do |group| %>
-      <%= link_to "#{group.group.name}に行く", group_path(group.group.id) %>
+      <%= link_to "#{group.name}に行く", group_path(group.id) %>
       <br>
     <% end %>
   <% else %>
