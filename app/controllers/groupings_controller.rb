@@ -23,7 +23,7 @@ class GroupingsController < ApplicationController
 
   def show
     @group = Group.find(@grouping.group_id)
-    @sesired_holidays = @user.sesired_holidays.where(user_id: @user.id, group_id: @grouping.group_id)
+    @sesired_holidays = @user.sesired_holidays.where(user_id: @user.id, group_id: @grouping.group_id).order(my_holiday: :asc)
   end
   
   def update
