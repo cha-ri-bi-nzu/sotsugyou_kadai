@@ -10,7 +10,8 @@ RSpec.describe 'ユーザー管理機能', type: :system do
         fill_in "user_password", with: 'adminadmin'
         fill_in "user_password_confirmation", with: 'adminadmin'
         click_button "アカウント登録"
-        expect(page).to have_content 'admin_user'
+        expect(current_path).to eq root_path
+        expect(page).to have_content 'シフト作成アプリ TOPページ'
         expect(page).to have_content 'マイページ'
         expect(page).to have_content 'ログアウト'
         expect(page).to have_content 'アカウント登録が完了しました。'
@@ -34,14 +35,14 @@ RSpec.describe 'セッション機能', type: :system do
   describe 'ログイン機能' do
     let!(:user) {FactoryBot.create(:user)}
     context 'ログインをした場合' do
-      it "ログイン状態で自分のマイページに遷移される" do
+      it "ログイン状態でTOPページに遷移される" do
         click_link "ログアウト"
         visit new_user_session_path
         fill_in "user_email", with: user.email
         fill_in "user[password]", with: 'adminadmin'
         click_button "ログイン"
-        expect(current_path).to eq user_path(user.id)
-        expect(page).to have_content 'admin_userさんのマイページ'
+        expect(current_path).to eq root_path
+        expect(page).to have_content 'シフト作成アプリ TOPページ'
         expect(page).to have_content 'マイページ'
         expect(page).to have_content 'ログアウト'
         expect(page).to have_content 'ログインしました。'
