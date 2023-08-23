@@ -1,11 +1,27 @@
 <h2>シフト作成アプリ TOPページ</h2>
 
-<br>
-<%= link_to "まずは無料登録から", new_user_registration_path %>
-<br>
-<%= link_to "アカウントをお持ちの方はコチラ！", new_user_session_path %>
-<br>
-<%= link_to "ゲストログイン(一般)", users_guest_sign_in_path, method: :post %>
-<br>
-<%= link_to "ゲストログイン(管理者)", users_admin_guest_sign_in_path, method: :post %>
+<% unless user_signed_in? %>
+  <br>
+  <%= link_to "まずは無料登録から", new_user_registration_path %>
+  <br>
+  <%= link_to "アカウントをお持ちの方はコチラ！", new_user_session_path %>
+  <br>
+  <%= link_to "ゲストログイン(一般)", users_guest_sign_in_path, method: :post %>
+  <br>
+  <%= link_to "ゲストログイン(管理者)", users_admin_guest_sign_in_path, method: :post %>
+<% else %>
+  <div>
+    <%= link_to "自分のページへ", user_path(current_user), class: "info-button" %>
+  </div>
+  <br>
+  <% if @group.present? %>
+    <% @group.each do |group| %>
+      <%= link_to "#{group.group.name}に行く", group_path(group) %>
+      <br>
+    <% end %>
+  <% else %>
+    <p>どのグループにも所属していません</p>
+  <% end %>
+  <%= link_to "グループを作る", new_group_path %>
+<% end %>
 <br>
