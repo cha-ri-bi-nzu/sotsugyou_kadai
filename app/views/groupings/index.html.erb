@@ -15,10 +15,10 @@
         <td><%= @user.name %></td>
         <% if @grouping.blank? %>
           <td><%= link_to "招待する", groupings_path(user_id: @user.id, group_id: @group.id), method: :post %></td>
-          <td><%= link_to "キャンセル", groupings_path %></td>
+          <td><%= link_to "キャンセル", groupings_path(group_id: @group.id) %></td>
         <% elsif @grouping.leave_group %>
           <td><%= link_to "招待する", grouping_path(@grouping), method: :patch %></td>
-          <td><%= link_to "キャンセル", groupings_path %></td>
+          <td><%= link_to "キャンセル", groupings_path(group_id: @group.id) %></td>
         <% else %>
           <td><%= "このユーザーは既に#{@group.name}に所属しています" %></td>
         <% end %>
