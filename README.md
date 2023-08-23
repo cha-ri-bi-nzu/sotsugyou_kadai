@@ -9,7 +9,8 @@
   - devise
 
 ## カリキュラム外の技術
-  - Active Hash
+  - Active Hash (gem)
+  - holiday_japan (gem)
 
 ## 実行手順
     $ git clone git@github.com:cha-ri-bi-nzu/sotsugyou_kadai.git
