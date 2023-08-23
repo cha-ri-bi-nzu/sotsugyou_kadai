@@ -2,9 +2,9 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authenticate_user!
 
-  def after_sign_in_path_for(logged_in_user)
-    user_path(logged_in_user.id)
-  end
+  # def after_sign_in_path_for(logged_in_user)
+  #   user_path(logged_in_user.id)
+  # end
   
   protected
 
