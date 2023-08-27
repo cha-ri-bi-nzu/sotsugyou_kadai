@@ -1,8 +1,8 @@
 require "date"
 
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[show edit update change_owner group_sesired_holiday invalid destroy]
-  before_action :admin_or_owner, only: %i[edit update change_owner group_sesired_holiday invalid]
+  before_action :set_group, only: %i[show edit update change_owner group_desired_holiday invalid destroy]
+  before_action :admin_or_owner, only: %i[edit update change_owner group_desired_holiday invalid]
   before_action :your_group_and_group_present, only: %i[show edit update change_owner invalid]
 
   def new
@@ -50,13 +50,13 @@ class GroupsController < ApplicationController
     end
   end
 
-  def group_sesired_holiday
+  def group_desired_holiday
     @month = Date.current >> 1
     if params[:group].present?
       month = "#{params[:group]["month(1i)"]}-#{params[:group]["month(2i)"]}-#{params[:group]["month(3i)"]}"
       @month = Date.parse(month)
     end
-    @sesired_holidays = SesiredHoliday.where(group_id: params[:group_id]).where("my_holiday >= ?", Date.parse((@month.beginning_of_month << 1).to_s)).where("my_holiday <= ?", Date.parse((@month.end_of_month >> 1).to_s)).reorder(my_holiday: :asc)
+    @desired_holidays = DesiredHoliday.where(group_id: params[:group_id]).where("my_holiday >= ?", Date.parse((@month.beginning_of_month << 1).to_s)).where("my_holiday <= ?", Date.parse((@month.end_of_month >> 1).to_s)).reorder(my_holiday: :asc)
   end
 
   def invalid

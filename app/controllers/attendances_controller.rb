@@ -20,14 +20,14 @@ class AttendancesController < ApplicationController
   end
 
   def create
-    group_sesired_holidays = SesiredHoliday.where(group_id: @group.id).where("my_holiday >= ?", Date.parse("#{@month.beginning_of_month}")).where("my_holiday <= ?", Date.parse("#{@month.end_of_month}")).reorder(my_holiday: :asc)
+    group_desired_holidays = DesiredHoliday.where(group_id: @group.id).where("my_holiday >= ?", Date.parse("#{@month.beginning_of_month}")).where("my_holiday <= ?", Date.parse("#{@month.end_of_month}")).reorder(my_holiday: :asc)
     @days.each do |day|
       @group.users.each do |user|
         attendance = Attendance.new
         attendance.working_day = day
         attendance.user_id = user.id
         attendance.group_id = @group.id
-        user_holidays = group_sesired_holidays.where(user_id: user.id)
+        user_holidays = group_desired_holidays.where(user_id: user.id)
         if day.wday == 0 || day.wday == 6 || HolidayJapan.check(day)
           attendance.working_status_id = 1
         elsif user_holidays.present? && user_holidays.any? { |holiday| holiday.my_holiday == day }
