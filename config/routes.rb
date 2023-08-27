@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get 'desired_holidays/new'
-  get 'desired_holidays/create'
-  get 'desired_holidays/destroy'
   root 'tops#index'
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
@@ -25,7 +22,7 @@ Rails.application.routes.draw do
 
   resources :groupings, only: %i[index create show update destroy]
 
-  resources :sesired_holidays, only: %i[new create destroy]
+  resources :desired_holidays, only: %i[new create destroy]
 
   resources :attendances, only: %i[index new create show edit destroy]
 
