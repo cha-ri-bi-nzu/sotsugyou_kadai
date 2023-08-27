@@ -37,7 +37,7 @@ class AttendancesController < ApplicationController
         end
         before_attendances = @group.attendances.where(user_id: user.id, working_day: day)
         before_attendances.destroy_all if before_attendances.present?
-        attendance.save
+        attendance.save # unless Grouping.find_by(user_id: user.id, group_id: @group.id).leave_group  (if文で消してelseの時保存したが良い？)
       end
     end
     attendance_id = Attendance.where(group_id: @group.id).find_by(working_day: Date.parse("#{@month.beginning_of_month}")).id
