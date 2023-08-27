@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'desired_holidays/new'
+  get 'desired_holidays/create'
+  get 'desired_holidays/destroy'
   root 'tops#index'
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
