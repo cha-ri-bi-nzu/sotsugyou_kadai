@@ -11,7 +11,7 @@ class AttendancesController < ApplicationController
     @month = Date.current
     set_month if params["month(1i)"].present?
     set_days
-    @attendances = Attendance.where(group_id: @group.id).where("working_day >= ?", Date.parse("#{@month.beginning_of_month}")).where("working_day <= ?", Date.parse("#{@month.end_of_month}")).order(user_id: :asc).order(working_day: :asc)
+    @attendances = Attendance.group_data(@group.id).month_data(@month).order(working_day: :asc)
     user_ids = @attendances.pluck(:user_id).uniq
     @group_users = User.find(user_ids)
   end
@@ -20,7 +20,7 @@ class AttendancesController < ApplicationController
   end
 
   def create
-    group_desired_holidays = DesiredHoliday.where(group_id: @group.id).where("my_holiday >= ?", Date.parse("#{@month.beginning_of_month}")).where("my_holiday <= ?", Date.parse("#{@month.end_of_month}")).reorder(my_holiday: :asc)
+    group_desired_holidays = DesiredHoliday.group_data(@group.id).where("my_holiday >= ?", Date.parse("#{@month.beginning_of_month}")).where("my_holiday <= ?", Date.parse("#{@month.end_of_month}")).reorder(my_holiday: :asc)
     @days.each do |day|
       @group.users.each do |user|
         attendance = Attendance.new
@@ -40,13 +40,13 @@ class AttendancesController < ApplicationController
         attendance.save # unless Grouping.find_by(user_id: user.id, group_id: @group.id).leave_group  (if文で消してelseの時保存したが良い？)
       end
     end
-    attendance_id = Attendance.where(group_id: @group.id).find_by(working_day: Date.parse("#{@month.beginning_of_month}")).id
+    attendance_id = Attendance.group_data(@group.id).find_by(working_day: Date.parse("#{@month.beginning_of_month}")).id
     redirect_to attendance_path(attendance_id)
   end
 
   def show
     @group = Attendance.find(params[:id]).group
-    @attendances = Attendance.where(group_id: @group.id).where("working_day >= ?", Date.parse("#{@month.beginning_of_month}")).where("working_day <= ?", Date.parse("#{@month.end_of_month}")).order(user_id: :asc).order(working_day: :asc)
+    @attendances = Attendance.group_data(@group.id).month_data(@month).order(working_day: :asc)
     user_ids = @attendances.pluck(:user_id).uniq
     @group_users = User.find(user_ids)
   end
