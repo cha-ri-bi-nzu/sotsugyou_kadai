@@ -22,12 +22,12 @@
 
 <div>
   <br>
-  <%= link_to "希望休を出す", new_sesired_holiday_path(user_id: current_user.id, group_id: @group.id) %>
+  <%= link_to "希望休を出す", new_desired_holiday_path(user_id: current_user.id, group_id: @group.id) %>
   <br>
   <%= link_to "希望休を確認する", grouping_path(@grouping_id) %>
   <% if current_user == @group.owner || current_user.admin %>
     <br>
-    <%= link_to "グループでの希望休を確認する", group_group_sesired_holiday_path(@group) %>
+    <%= link_to "グループでの希望休を確認する", group_group_desired_holiday_path(@group) %>
   <% end %>
 </div>
 

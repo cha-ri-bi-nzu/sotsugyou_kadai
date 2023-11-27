@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_18_150209) do
+ActiveRecord::Schema.define(version: 2023_08_27_022721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,17 @@ ActiveRecord::Schema.define(version: 2023_08_18_150209) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id"], name: "index_attendances_on_group_id"
     t.index ["user_id"], name: "index_attendances_on_user_id"
+  end
+
+  create_table "desired_holidays", force: :cascade do |t|
+    t.date "my_holiday", null: false
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_desired_holidays_on_group_id"
+    t.index ["my_holiday"], name: "index_desired_holidays_on_my_holiday"
+    t.index ["user_id"], name: "index_desired_holidays_on_user_id"
   end
 
   create_table "groupings", force: :cascade do |t|
@@ -82,6 +93,8 @@ ActiveRecord::Schema.define(version: 2023_08_18_150209) do
 
   add_foreign_key "attendances", "groups"
   add_foreign_key "attendances", "users"
+  add_foreign_key "desired_holidays", "groups"
+  add_foreign_key "desired_holidays", "users"
   add_foreign_key "groupings", "groups"
   add_foreign_key "groupings", "users"
   add_foreign_key "sesired_holidays", "groups"
