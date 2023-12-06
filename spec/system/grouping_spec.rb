@@ -4,10 +4,10 @@ RSpec.describe 'グルーピング機能', type: :system do
   let!(:user){FactoryBot.create(:user)}
   let!(:second_user){FactoryBot.create(:second_user)}
   let!(:third_user){FactoryBot.create(:third_user)}
-  let!(:group){FactoryBot.create(:group, id: 100,owner_id: user.id)}
-  let!(:grouping) {FactoryBot.create(:grouping, user_id: user.id, group_id: group.id)}
-  let!(:second_grouping) {FactoryBot.create(:second_grouping, user_id: second_user.id, group_id: group.id)}
-  let!(:third_grouping) {FactoryBot.create(:third_grouping, user_id: third_user.id, group_id: group.id)}
+  let!(:group){FactoryBot.create(:group)}
+  let!(:grouping) {FactoryBot.create(:grouping)}
+  let!(:second_grouping) {FactoryBot.create(:second_grouping)}
+  let!(:third_grouping) {FactoryBot.create(:third_grouping)}
   describe '一般ユーザー機能' do
     before do
       visit new_user_session_path
