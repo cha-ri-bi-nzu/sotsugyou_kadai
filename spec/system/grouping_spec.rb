@@ -16,7 +16,6 @@ RSpec.describe 'グルーピング機能', type: :system do
       click_button "ログイン"
       click_link "マイページ"
       click_link "test_group"
-      binding.pry
     end
     context '一般ユーザーがグループを脱退した場合' do
       it 'グループから脱退(論理削除)しマイページに遷移する' do
@@ -72,11 +71,11 @@ RSpec.describe 'グルーピング機能', type: :system do
     end
     context 'ユーザーを完全除名した場合' do
       it 'グループから脱退される(物理削除)' do
-        binding.pry
+        # binding.pry
         find("#destroy-button#{third_user.id}").click
         expect(current_path).to eq group_path(group.id)
         expect(page).to_not have_css "#destroy-button#{third_user.id}"
-        expect(page).to have_content "#{third_user.name}さんが完全除名されました。"
+        expect(page).to have_content "#{third_user.name}さんが完全に除名されました。"
       end
     end
   end
