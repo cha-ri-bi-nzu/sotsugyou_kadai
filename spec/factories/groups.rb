@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :group do
     id {100}
     name {'test_group'}
-    owner_id {1}
+    owner_id {3}
     invalid_group {false}
   end
   factory :second_group, class: Group do
