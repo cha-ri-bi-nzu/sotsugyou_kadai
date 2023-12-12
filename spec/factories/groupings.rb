@@ -16,15 +16,20 @@ FactoryBot.define do
   end
   factory :fourth_grouping, class: Grouping do
     leave_group {false}
-    group_id {101}
-    user_id {1}
+    group_id {100}
+    user_id {4}
   end
   factory :fifth_grouping, class: Grouping do
     leave_group {false}
     group_id {101}
-    user_id {2}
+    user_id {1}
   end
   factory :sixth_grouping, class: Grouping do
+    leave_group {false}
+    group_id {101}
+    user_id {2}
+  end
+  factory :seventh_grouping, class: Grouping do
     leave_group {true}
     group_id {102}
     user_id {2}
