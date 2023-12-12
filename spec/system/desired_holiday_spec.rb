@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'date'
 
 RSpec.describe '希望休申請機能', type: :system do
   let!(:user) {FactoryBot.create(:user)}
@@ -9,7 +8,6 @@ RSpec.describe '希望休申請機能', type: :system do
   let!(:grouping) {FactoryBot.create(:grouping)}
   let!(:second_grouping) {FactoryBot.create(:second_grouping)}
   let!(:third_grouping) {FactoryBot.create(:third_grouping)}
-  let!(:desired_holiday) {FactoryBot.create(:desired_holiday)}
   let!(:fourth_desired_holiday) {FactoryBot.create(:fourth_desired_holiday)}
   describe '一般ユーザー機能' do
     before do
