@@ -30,7 +30,11 @@ class GroupingsController < ApplicationController
     if params[:id].present? && params[:user_id].present?
       grouping = Grouping.find_by(user_id: params[:user_id], group_id: params[:id])
       in_or_out(grouping)
-      redirect_to group_path(params[:id]), notice: owner_or_people(grouping)
+      if params[:user_id] == current_user.id
+        redirect_to user_path(params[:user_id]), notice: owner_or_people(grouping)
+      else
+        redirect_to group_path(params[:id]), notice: owner_or_people(grouping)
+      end
     elsif params[:id].present?
       grouping = Grouping.find(params[:id])
       in_or_out(grouping)
@@ -42,7 +46,7 @@ class GroupingsController < ApplicationController
   end
 
   def destroy
-    grouping = Grouping.find_by(params[:id]).destroy
+    grouping = Grouping.find_by(group_id: params[:id],user_id: params[:user_id]).destroy
     redirect_to group_path(params[:id]), notice: "#{grouping.user.name}さんが完全に除名されました。"
   end
 
@@ -59,6 +63,8 @@ class GroupingsController < ApplicationController
   def owner_or_people(grouping)
     if grouping.group.owner == grouping.user
       "オーナーは脱退できません！" 
+    elsif params[:user_id] == current_user.id
+      "#{@group.name}を脱退しました。"  # 上書きされているので、要修正
     else
       "#{User.find(params[:user_id]).name}さんが除名されました。"
     end

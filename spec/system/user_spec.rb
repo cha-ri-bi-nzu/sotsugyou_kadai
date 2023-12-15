@@ -11,7 +11,7 @@ RSpec.describe 'ユーザー管理機能', type: :system do
         fill_in "user_password_confirmation", with: 'adminadmin'
         click_button "アカウント登録"
         expect(current_path).to eq root_path
-        expect(page).to have_content 'シフト作成アプリ TOPページ'
+        expect(page).to have_content '自動作成 シフトさん'
         expect(page).to have_content 'マイページ'
         expect(page).to have_content 'ログアウト'
         expect(page).to have_content 'アカウント登録が完了しました。'
@@ -42,7 +42,7 @@ RSpec.describe 'セッション機能', type: :system do
         fill_in "user[password]", with: 'adminadmin'
         click_button "ログイン"
         expect(current_path).to eq root_path
-        expect(page).to have_content 'シフト作成アプリ TOPページ'
+        expect(page).to have_content '自動作成 シフトさん'
         expect(page).to have_content 'マイページ'
         expect(page).to have_content 'ログアウト'
         expect(page).to have_content 'ログインしました。'
