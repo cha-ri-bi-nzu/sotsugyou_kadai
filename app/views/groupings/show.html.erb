@@ -1,12 +1,12 @@
-<h2><%= "#{@user.name}さんの#{@group.name}での希望休" %></h2>
+<h2><%= "#{@user.name}さんの#{@group.name}希望休" %></h2>
 
 <br>
 <% if @desired_holidays.present? %>
   <table>
     <% @desired_holidays.each do |desired_holiday| %>
       <tr>
-        <td>・<%= "#{desired_holiday.my_holiday} (#{t("date.abbr_day_names")[desired_holiday.my_holiday.wday]})" %></td>
-        <td><%= link_to "取り消し", desired_holiday_path(id: desired_holiday.id, user_id: @user.id, grouping_id: @grouping.id), class: "destroy-button", id: "destroy-button#{desired_holiday.id}", method: :delete, date: {confirm: "#{desired_holiday.my_holiday}を取り消しますか？"} %></td>
+        <td>・<%= "#{desired_holiday.my_holiday}" %><%= "(#{t("date.abbr_day_names")[desired_holiday.my_holiday.wday]})" %></td>
+        <td><%= link_to "取り消し", desired_holiday_path(id: desired_holiday.id, user_id: @user.id, grouping_id: @grouping.id), class: "destroy-button", method: :delete, date: {confirm: "#{desired_holiday.my_holiday}を取り消しますか？"} %></td>
       </tr>
     <% end %>
   </table>

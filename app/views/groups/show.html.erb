@@ -9,16 +9,12 @@
   <% @users.each do |user| %>
     <tr>
       <td><%= user.name %></td>
-      <% if current_user == user %>
-        <td><%= link_to "脱退", grouping_path(user_id: user.id), class: "leave-button", id: "leave-button#{user.id}", method: :patch, data: {confirm: "#{@group.name}から脱退してもよろしいですか？"} %></td>
-      <% elsif current_user == @group.owner || current_user.admin %>
-        <td><%= link_to "除名", grouping_path(user_id: user.id), class: "leave-button", id: "leave-button#{user.id}", method: :patch, data: {confirm: "#{user.name}さんを除名してもよろしいですか？"} %></td>
-      <% end %>
       <% if current_user == @group.owner || current_user.admin %>
-        <td><%= link_to "オーナー譲渡", group_change_owner_path(@group.id, user.id), class: "owner-button", id: "owner-button#{user.id}", method: :patch, data: {confirm: "#{user.name}さんにオーナー権限を譲渡してもよろしいですか？"} unless user == @group.owner %></td>
+        <td><%= link_to "除名", grouping_path(user_id: user.id), class: "leave-button", method: :patch, data: {confirm: "#{user.name}さんを除名してもよろしいですか？"} %></td>
+        <td><%= link_to "オーナー譲渡", group_change_owner_path(@group.id, user.id), class: "owner-button", method: :patch, data: {confirm: "#{user.name}さんにオーナー権限を譲渡してもよろしいですか？"} unless user == @group.owner %></td>
       <% end %>
       <% if current_user.admin %>
-        <td><%= link_to "完全除名", grouping_path(user_id: user.id), class: "destroy-button", id: "destroy-button#{user.id}", method: :delete, data: {confirm: "#{user.name}さんを完全に除名してもよろしいですか？"} %></td>
+        <td><%= link_to "完全除名", grouping_path(user_id: user.id), class: "destroy-button", method: :delete, data: {confirm: "#{user.name}さんを完全に除名してもよろしいですか？"} %></td>
       <% end %>
     </tr>
   <% end %>  
