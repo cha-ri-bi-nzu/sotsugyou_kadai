@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :grouping do
+  factory :sesired_holiday do
     
   end
 end

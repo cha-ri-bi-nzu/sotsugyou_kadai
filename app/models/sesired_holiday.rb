@@ -1,4 +1,4 @@
-class DesiredHoliday < ApplicationRecord
+class SesiredHoliday < ApplicationRecord
   validates :my_holiday, presence: true
 
   belongs_to :user
