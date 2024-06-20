@@ -14,6 +14,7 @@ class DesiredHolidaysController < ApplicationController
     else
       flash.now[:alert] = "申請に失敗しました"
       render :new
+    end
   end
 
   def destroy
